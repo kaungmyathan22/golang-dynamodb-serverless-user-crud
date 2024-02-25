@@ -32,6 +32,7 @@ func GetUser(req events.APIGatewayProxyRequest, tableName string, dynamoDBClient
 	}
 	return apiResponse(http.StatusOK, result)
 }
+
 func GetUsers(req events.APIGatewayProxyRequest, tableName string, dynamoDBClient dynamodbiface.DynamoDBAPI) (
 	*events.APIGatewayProxyResponse, error,
 ) {
