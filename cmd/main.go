@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	dynaClient dynamodbiface.DynamoDBAPI
+	dynamoDBClient dynamodbiface.DynamoDBAPI
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-	dynamoClient = dynamodb.New(awsSession)
+	dynamoDBClient = dynamodb.New(awsSession)
 	lambda.Start(handler)
 }
 
@@ -31,13 +31,13 @@ const tableName = "lambdaInGoUser"
 func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	switch req.HTTPMethod {
 	case "GET":
-		return handlers.GetUser(req, tableName, dynaClient)
+		return handlers.GetUser(req, tableName, dynamoDBClient)
 	case "POST":
-		return handlers.CreateUser(req, tableName, dynaClient)
+		return handlers.CreateUser(req, tableName, dynamoDBClient)
 	case "PUT":
-		return handlers.UpdateUser(req, tableName, dynaClient)
+		return handlers.UpdateUser(req, tableName, dynamoDBClient)
 	case "DELETE":
-		return handlers.DeleteUser(req, tableName, dynaClient)
+		return handlers.DeleteUser(req, tableName, dynamoDBClient)
 	default:
 		return handlers.UnhandledMethod()
 	}
